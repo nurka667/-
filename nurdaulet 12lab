@@ -1,0 +1,194 @@
+from abc import ABC, abstractmethod
+
+#task1
+
+class Vehicle(ABC):
+    @abstractmethod
+    def move(self):
+        pass
+
+    @abstractmethod
+    def fuel_type(self):
+        pass
+
+
+class Car(Vehicle):
+    def move(self):
+        return "Car is driving"
+
+    def fuel_type(self):
+        return "Petrol or Diesel"
+
+
+class Bicycle(Vehicle):
+    def move(self):
+        return "Bicycle is pedaling"
+
+    def fuel_type(self):
+        return "Human power"
+
+
+#task2
+
+class DatabaseInterface(ABC):
+    @abstractmethod
+    def connect(self):
+        pass
+
+    @abstractmethod
+    def execute_query(self):
+        pass
+
+    @abstractmethod
+    def close(self):
+        pass
+
+
+class SQLiteDatabase(DatabaseInterface):
+    def connect(self):
+        print("Connecting to SQLite...")
+
+    def execute_query(self):
+        print("Executing SQLite query...")
+
+    def close(self):
+        print("Closing SQLite connection...")
+
+
+class PostgreSQLDatabase(DatabaseInterface):
+    def connect(self):
+        print("Connecting to PostgreSQL...")
+
+    def execute_query(self):
+        print("Running PostgreSQL query...")
+
+    def close(self):
+        print("Closing PostgreSQL connection...")
+
+
+#task3
+
+class Logger(ABC):
+    def header(self):
+        print("=== LOG START ===")
+
+    @abstractmethod
+    def log(self, message):
+        pass
+
+
+class FileLogger(Logger):
+    def log(self, message):
+        with open("log.txt", "a") as file:
+            file.write(message + "\n")
+        print("Message written to log.txt")
+
+
+class ConsoleLogger(Logger):
+    def log(self, message):
+        print("Console log:", message)
+
+
+#task4
+
+class Airplane(Vehicle):
+    def move(self):
+        return "Airplane is flying"
+
+    def fuel_type(self):
+        return "Jet fuel"
+
+
+class Train(Vehicle):
+    def move(self):
+        return "Train is moving on rails"
+
+    def fuel_type(self):
+        return "Electricity or Diesel"
+
+
+#task5
+class PaymentSystem(ABC):
+    @abstractmethod
+    def authorize(self):
+        pass
+
+    @abstractmethod
+    def process(self):
+        pass
+
+    @abstractmethod
+    def refund(self):
+        pass
+
+
+class PayPal(PaymentSystem):
+    def authorize(self):
+        print("PayPal authorization successful.")
+
+    def process(self):
+        print("Processing PayPal payment...")
+
+    def refund(self):
+        print("Refunding PayPal payment...")
+
+
+class KaspiPay(PaymentSystem):
+    def authorize(self):
+        print("KaspiPay authorization complete.")
+
+    def process(self):
+        print("Processing Kaspi Pay transaction...")
+
+    def refund(self):
+        print("Kaspi Pay refund issued.")
+
+
+class VisaPayment(PaymentSystem):
+    def authorize(self):
+        print("Verifying Visa card...")
+
+    def process(self):
+        print("Processing Visa payment...")
+
+    def refund(self):
+        print("Visa refund completed.")
+
+
+
+
+if __name__ == "__main__":
+    print("\n===== TASK 1 — VEHICLES =====")
+    car = Car()
+    bike = Bicycle()
+    print(car.move(), "-", car.fuel_type())
+    print(bike.move(), "-", bike.fuel_type())
+
+    print("\n===== TASK 2 — DATABASES =====")
+    dbs = [SQLiteDatabase(), PostgreSQLDatabase()]
+    for db in dbs:
+        db.connect()
+        db.execute_query()
+        db.close()
+        print("-" * 30)
+
+    print("\n===== TASK 3 — LOGGER =====")
+    fl = FileLogger()
+    cl = ConsoleLogger()
+    fl.header()
+    fl.log("This is a file log message.")
+    cl.header()
+    cl.log("This is a console log message.")
+
+    print("\n===== TASK 4 — POLYMORPHISM =====")
+    vehicles = [Car(), Bicycle(), Airplane(), Train()]
+    for v in vehicles:
+        print(v.move())
+
+    print("\n===== TASK 5 — PAYMENT SYSTEMS =====")
+    payments = [PayPal(), KaspiPay(), VisaPayment()]
+    for p in payments:
+        p.authorize()
+        p.process()
+        p.refund()
+        print("-" * 25)
